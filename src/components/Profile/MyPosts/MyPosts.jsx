@@ -1,14 +1,10 @@
 import styles from './MyPosts.module.css'
 import Post from './Post/Post.jsx';
 
-const MyPosts = () => {
-
-    let postData = [
-        {id: 1, message: 'Hi, how are you', count: 15},
-        {id: 2, message: 'It s my first post', count: 20}
-    ];
-
-    let postsElements = postData.map( (post) => {
+const MyPosts = (props) => {
+    
+    {/*Преобразуем массив объектов в массив jsx элементов*/}
+    let postsElements = props.postData.map( (post) => {
         return(
             <Post message={post.message} count={post.count} />
         )
