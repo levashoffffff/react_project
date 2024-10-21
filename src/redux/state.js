@@ -18,6 +18,13 @@ let state = {
         {id: 2, message: 'How are you?'},
         {id: 3, message: 'Hello'},
       ]
+    },
+    navbar: {
+      friends: [
+        {id: 1, name: "Vasya"},
+        {id: 2, name: "Sasha"},
+        {id: 3, name: "Sveta"}
+      ]
     }
 }
 
