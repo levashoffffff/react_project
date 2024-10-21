@@ -37,14 +37,14 @@ const Dialogs = (props) => {
     ];*/}
 
     {/*Преобразуем массив объектов в массив jsx элементов dialog */}
-    let dialogsElements = props.dialogsData.map( (dialog) => {
+    let dialogsElements = props.state.dialogsData.map( (dialog) => {
         return (
             <DialogItem name={dialog.name} id={dialog.id} />
         )
     });
 
     {/*Преобразуем массив объектов в массив jsx элементов dialog */}
-    let messagesElements = props.messagesData.map( (message) => {
+    let messagesElements = props.state.messagesData.map( (message) => {
         return (
             <Message message={message.message}/>
         )

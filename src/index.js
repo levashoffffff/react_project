@@ -3,14 +3,16 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import state from './redux/state.js';
 
-{/*ПОСТЫ */}
+
+/* //ПОСТЫ 
 let postData = [
   {id: 1, message: 'Hi, how are you', count: 15},
   {id: 2, message: 'It s my first post', count: 20}
 ];
 
-{/*ДИАЛОГИ*/}
+//ДИАЛОГИ
 let dialogsData = [
   {id: 1, name: 'Andrey'},
   {id: 2, name: 'Artur'},
@@ -19,18 +21,19 @@ let dialogsData = [
   {id: 5, name: 'Valera'},
 ];
 
-{/*СООБЩЕНИЯ*/}
+//СООБЩЕНИЯ
 let messagesData = [
   {id: 1, message: 'Hi'},
   {id: 2, message: 'How are you?'},
   {id: 3, message: 'Hello'},
-];
+]; */
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App postData={postData} dialogsData={dialogsData} messagesData={messagesData} />
+    <App appState={state} />
+    {/*<App postData={postData} dialogsData={dialogsData} messagesData={messagesData} />*/}
   </React.StrictMode>
 );
 
