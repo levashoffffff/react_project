@@ -1,10 +1,26 @@
-import React from 'react';
+
+//------------Удаляем импорты т.к. они есть в render.js
+
+/*import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
+import state from './redux/state.js';
+import {addPost} from './redux/state.js'*/
+
+//////////////Удаляем импорты т.к. они есть в render.js
+
+
 import state from './redux/state.js';
 
+
+//------------Импорт функции из render.js
+import reportWebVitals from './reportWebVitals';
+import { renderEntireTree } from './render.js';
+///////////////Импорт функции из render.js
+
+
+//-------------Эти данные перенсли в state.js
 
 /* //ПОСТЫ 
 let postData = [
@@ -28,14 +44,27 @@ let messagesData = [
   {id: 3, message: 'Hello'},
 ]; */
 
+/////////////////Эти данные перенсли в state.js
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App appState={state} />
-    {/*<App postData={postData} dialogsData={dialogsData} messagesData={messagesData} />*/}
-  </React.StrictMode>
-);
+
+//--------------ДАННЫЙ УЧАСТОК КОДА ПЕРЕНЕСЛИ В render.js
+
+/*const root = ReactDOM.createRoot(document.getElementById('root'));
+const renderEntireTree = () => {
+  root.render(
+    <React.StrictMode>
+      <App appState={state} addPost={addPost}/>
+      {/*<App postData={postData} dialogsData={dialogsData} messagesData={messagesData} />
+    </React.StrictMode>
+  );
+}
+*/
+
+///////////////ДАННЫЙ УЧАСТОК КОДА ПЕРЕНЕСЛИ В render.js
+
+//Вызвали функцию из render.js
+renderEntireTree(state);
+
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

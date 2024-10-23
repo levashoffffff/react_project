@@ -1,3 +1,7 @@
+//-------------Импорт функции из render.js
+import { renderEntireTree } from "../render.js";
+///////////////Импорт функции из render.js
+
 let state = {
     profilePage: {
       postData: [
@@ -26,6 +30,19 @@ let state = {
         {id: 3, name: "Sveta"},
       ]
     }
+}
+
+export let addPost = (postMessage) => {
+
+  let newPost = {
+    id: 3,
+    message: postMessage,
+    count: 0
+  };
+
+  state.profilePage.postData.push(newPost);
+  //Запускается функция, которая будет повторно отрисовывать render с учетом изменившихся данных в state.js
+  renderEntireTree(state);
 }
 
 export default state;
