@@ -2,6 +2,7 @@ import styles from './Dialogs.module.css';
 import { NavLink } from 'react-router-dom';
 import Message from './Message/Message';
 import DialogItem from './DialogItem/DialogItem';
+import React from 'react';
 
 
 {/*const DialogItem = (props) => {
@@ -20,6 +21,15 @@ import DialogItem from './DialogItem/DialogItem';
 }*/}
 
 const Dialogs = (props) => {
+
+    //ДЗ тренировка onClick, ref, VirtualDOM
+    let newMessageElement = React.createRef();
+    let messageData = () => {
+        let message = newMessageElement.current.value;
+        alert(message);
+        newMessageElement.current.value = '';
+    }
+
 
     {/*Данные*/}
     {/*let dialogsData = [
@@ -78,6 +88,13 @@ const Dialogs = (props) => {
                 <div className={styles.message}>Hi</div>
                 <div className={styles.message}>How are you?</div>
                 <div className={styles.message}>Hello</div>*/}
+
+
+                <div>
+                    <textarea ref={newMessageElement}></textarea>
+                </div>
+                <button onClick={messageData}>Отправить</button>
+                
             </div>   
         </div>
     )

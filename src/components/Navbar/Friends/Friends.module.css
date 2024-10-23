@@ -5,11 +5,13 @@
 
 .friends {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
 }
 
 .friends-item {
     margin-top: 10px;
+    margin-right: 5px;
 }
 
 .circle {
