@@ -1,13 +1,17 @@
-//-------------Импорт функции из render.js
-import { renderEntireTree } from "../render.js";
-///////////////Импорт функции из render.js
 
+//После отработки функции subscribe этой функции присвоится значение observer
+let renderEntireTree = () => {
+  console.log('State was changed');
+}
+
+//Хранилище данных
 let state = {
     profilePage: {
       postData: [
         {id: 1, message: 'Hi, how are you', count: 15},
         {id: 2, message: 'It s my first post', count: 20}
-      ]
+      ],
+      newPostText: 'Artur Levashov'
     },
     dialogsPage: {
       dialogsData: [
@@ -32,7 +36,8 @@ let state = {
     }
 }
 
-export let addPost = (postMessage) => {
+//Функция которая будет отрабатывать при клике на кнопку
+export const addPost = (postMessage) => {
 
   let newPost = {
     id: 3,
@@ -42,7 +47,20 @@ export let addPost = (postMessage) => {
 
   state.profilePage.postData.push(newPost);
   //Запускается функция, которая будет повторно отрисовывать render с учетом изменившихся данных в state.js
-  renderEntireTree(state);
+  renderEntireTree();
+}
+
+//Функция которая будет отрабатывать при изменении textarea
+export const updateNewPostText = (newText) => {
+
+  state.profilePage.newPostText = newText;
+  //Запускается функция, которая будет повторно отрисовывать render с учетом изменившихся данных в state.js
+  renderEntireTree();
+}
+
+//Написали функцию которая будет связующим звеном между index.js и state.js в качестве параметра передали observer который содержит функию renderEntireTree в index.js. Далее присвоили функции renderEntireTree созданной в state.js значение observer = const root = ReactDOM.createRoot .......
+export const subscribe = (observer) => {
+  renderEntireTree = observer; //наблюдатель
 }
 
 export default state;

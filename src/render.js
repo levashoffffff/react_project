@@ -7,7 +7,8 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App.js';
 import reportWebVitals from './reportWebVitals.js';
-import {addPost} from './redux/state.js'
+import {addPost, updateNewPostText} from './redux/state.js'
+
 //////////////////Все необходимые импорты из index.js
 
 
@@ -24,7 +25,7 @@ export let renderEntireTree = (state) => {
   const root = ReactDOM.createRoot(document.getElementById('root'));
   root.render(
     <React.StrictMode>
-      <App appState={state} addPost={addPost}/>
+      <App appState={state} addPost={addPost} updateNewPostText={updateNewPostText} />
       {/*<App postData={postData} dialogsData={dialogsData} messagesData={messagesData} />*/}
     </React.StrictMode>
   );

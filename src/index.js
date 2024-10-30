@@ -1,22 +1,20 @@
 
 //------------Удаляем импорты т.к. они есть в render.js
 
-/*import React from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import state from './redux/state.js';
-import {addPost} from './redux/state.js'*/
+import reportWebVitals from './reportWebVitals';
+import state, { subscribe } from './redux/state.js';
+import {addPost, updateNewPostText} from './redux/state.js';
+
 
 //////////////Удаляем импорты т.к. они есть в render.js
 
 
-import state from './redux/state.js';
-
-
 //------------Импорт функции из render.js
-import reportWebVitals from './reportWebVitals';
-import { renderEntireTree } from './render.js';
+/* import { renderEntireTree } from './render.js'; */
 ///////////////Импорт функции из render.js
 
 
@@ -63,7 +61,22 @@ const renderEntireTree = () => {
 ///////////////ДАННЫЙ УЧАСТОК КОДА ПЕРЕНЕСЛИ В render.js
 
 //Вызвали функцию из render.js
+/* renderEntireTree(state); */
+
+let renderEntireTree = (state) => {
+
+  const root = ReactDOM.createRoot(document.getElementById('root'));
+  root.render(
+    <React.StrictMode>
+      <App appState={state} addPost={addPost} updateNewPostText={updateNewPostText} />
+      {/*<App postData={postData} dialogsData={dialogsData} messagesData={messagesData} />*/}
+    </React.StrictMode>
+  );
+}
+
 renderEntireTree(state);
+
+subscribe(renderEntireTree);
 
 
 // If you want to start measuring performance in your app, pass a function
