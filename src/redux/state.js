@@ -1,11 +1,7 @@
 
-//После отработки функции subscribe этой функции присвоится значение observer
-let renderEntireTree = () => {
-  console.log('State was changed');
-}
-
-//Хранилище данных
-let state = {
+let store = {
+  //Хранилище данных, мы сделали его приватным, к нему нельзя обращаться напрямую.
+  _state: {
     profilePage: {
       postData: [
         {id: 1, message: 'Hi, how are you', count: 15},
@@ -34,33 +30,42 @@ let state = {
         {id: 3, name: "Sveta"},
       ]
     }
+  },
+
+  //Метод возвращающий _state
+  getState() {
+    return this._state;
+  },
+
+  //После отработки функции subscribe этой функции присвоится значение observer
+  _callSubscriber() {
+    console.log('State was changed');
+  },
+
+  //Функция которая будет отрабатывать при клике на кнопку
+  addPost(postMessage) {
+    let newPost = {
+      id: 3,
+      message: postMessage,
+      count: 0
+    };
+    this._state.profilePage.postData.push(newPost);
+    //Запускается функция, которая будет повторно отрисовывать render с учетом изменившихся данных в state.js
+    this._callSubscriber();
+  },
+
+  //Функция которая будет отрабатывать при изменении textarea
+  updateNewPostText(newText) {
+    this._state.profilePage.newPostText = newText;
+    //Запускается функция, которая будет повторно отрисовывать render с учетом изменившихся данных в state.js
+    this._callSubscriber();
+  },
+
+  //Написали функцию которая будет связующим звеном между index.js и state.js в качестве параметра передали observer который содержит функию renderEntireTree в index.js. Далее присвоили функции renderEntireTree созданной в state.js значение observer = const root = ReactDOM.createRoot .......
+  subscribe(observer) {
+    this._callSubscriber = observer; //наблюдатель
+  }
+
 }
 
-//Функция которая будет отрабатывать при клике на кнопку
-export const addPost = (postMessage) => {
-
-  let newPost = {
-    id: 3,
-    message: postMessage,
-    count: 0
-  };
-
-  state.profilePage.postData.push(newPost);
-  //Запускается функция, которая будет повторно отрисовывать render с учетом изменившихся данных в state.js
-  renderEntireTree();
-}
-
-//Функция которая будет отрабатывать при изменении textarea
-export const updateNewPostText = (newText) => {
-
-  state.profilePage.newPostText = newText;
-  //Запускается функция, которая будет повторно отрисовывать render с учетом изменившихся данных в state.js
-  renderEntireTree();
-}
-
-//Написали функцию которая будет связующим звеном между index.js и state.js в качестве параметра передали observer который содержит функию renderEntireTree в index.js. Далее присвоили функции renderEntireTree созданной в state.js значение observer = const root = ReactDOM.createRoot .......
-export const subscribe = (observer) => {
-  renderEntireTree = observer; //наблюдатель
-}
-
-export default state;
+export default store;
