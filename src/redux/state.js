@@ -1,3 +1,5 @@
+const ADD_POST = 'ADD-POST';
+const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 
 let store = {
   //Хранилище данных, мы сделали его приватным, к нему нельзя обращаться напрямую.
@@ -32,17 +34,22 @@ let store = {
     }
   },
 
-  //Метод возвращающий _state
-  getState() {
-    return this._state;
-  },
-
   //После отработки функции subscribe этой функции присвоится значение observer
   _callSubscriber() {
     console.log('State was changed');
   },
 
-  //Функция которая будет отрабатывать при клике на кнопку
+  //Метод возвращающий _state
+  getState() {
+    return this._state;
+  },
+
+  //Написали функцию которая будет связующим звеном между index.js и state.js в качестве параметра передали observer который содержит функию renderEntireTree в index.js. Далее присвоили функции renderEntireTree созданной в state.js значение observer = const root = ReactDOM.createRoot .......
+  subscribe(observer) {
+    this._callSubscriber = observer; //наблюдатель
+  },
+
+/*   //Функция которая будет отрабатывать при клике на кнопку
   addPost(postMessage) {
     let newPost = {
       id: 3,
@@ -59,13 +66,55 @@ let store = {
     this._state.profilePage.newPostText = newText;
     //Запускается функция, которая будет повторно отрисовывать render с учетом изменившихся данных в state.js
     this._callSubscriber();
-  },
+  }, */
 
-  //Написали функцию которая будет связующим звеном между index.js и state.js в качестве параметра передали observer который содержит функию renderEntireTree в index.js. Далее присвоили функции renderEntireTree созданной в state.js значение observer = const root = ReactDOM.createRoot .......
-  subscribe(observer) {
-    this._callSubscriber = observer; //наблюдатель
+  dispatch(action) { //{type: 'ADD-POST'}
+    //Участок кода который будет отрабатывать при клике на кнопку
+    if(action.type === 'ADD-POST') {
+      let newPost = {
+        id: 3,
+        message: action.postMessage,
+        count: 0
+      };
+      this._state.profilePage.postData.push(newPost);
+      //Запускается функция, которая будет повторно отрисовывать render с учетом изменившихся данных в state.js
+      this._callSubscriber();
+    } 
+    //Участок кода который будет отрабатывать при изменении textarea
+    else if(action.type === 'UPDATE-NEW-POST-TEXT') {
+      this._state.profilePage.newPostText = action.newText;
+      //Запускается функция, которая будет повторно отрисовывать render с учетом изменившихся данных в state.js
+      this._callSubscriber()
+    }
   }
-
 }
+
+/* export const addPostActionCreator = (text) => {
+  return {
+      type: 'ADD-POST',
+      postMessage: text
+  }
+}
+
+export const updateNewPostTextActionCreator = (text) => {
+  return {
+      type: 'UPDATE-NEW-POST-TEXT',
+      newText: text
+  }
+} */
+
+  export const addPostActionCreator = (text) => {
+    return {
+        type: ADD_POST,
+        postMessage: text
+    }
+  }
+  
+  export const updateNewPostTextActionCreator = (text) => {
+    return {
+        type: UPDATE_NEW_POST_TEXT,
+        newText: text
+    }
+  }  
 
 export default store;

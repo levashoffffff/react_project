@@ -67,10 +67,12 @@ let renderEntireTree = () => {
   const root = ReactDOM.createRoot(document.getElementById('root'));
   root.render(
     <React.StrictMode>
-      <App appState={store.getState()} 
+      {/* <App appState={store.getState()} 
           addPost={store.addPost.bind(store)} 
-          updateNewPostText={store.updateNewPostText.bind(store)} />
+          updateNewPostText={store.updateNewPostText.bind(store)} /> */}
       {/*<App postData={postData} dialogsData={dialogsData} messagesData={messagesData} />*/}
+      <App appState={store.getState()} 
+          dispatch={store.dispatch.bind(store)} />
     </React.StrictMode>
   );
 }
