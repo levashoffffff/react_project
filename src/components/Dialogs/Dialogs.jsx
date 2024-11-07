@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import Message from './Message/Message';
 import DialogItem from './DialogItem/DialogItem';
 import React from 'react';
+import {newMessageBodyActionCreator, sendMessageActionCreator} from './../../redux/state.js'
 
 
 {/*const DialogItem = (props) => {
@@ -21,13 +22,16 @@ import React from 'react';
 }*/}
 
 const Dialogs = (props) => {
+     {/*Через props получаем строку newMessagesBody */}
+    let newMessageBody = props.state.newMessagesBody;
 
-    //ДЗ тренировка onClick, ref, VirtualDOM
-    let newMessageElement = React.createRef();
-    let messageData = () => {
-        let message = newMessageElement.current.value;
-        alert(message);
-        newMessageElement.current.value = '';
+    let onSendMessageClick = () => {
+        props.dispatch(sendMessageActionCreator());
+    }
+
+    let onNewMessageChange = (e) => {
+        let body = e.target.value;
+        props.dispatch(newMessageBodyActionCreator(body));
     }
 
 
@@ -75,7 +79,20 @@ const Dialogs = (props) => {
                 <DialogItem name="Valera" id="5" />*/}
             </div> 
             <div className={styles.messages}>
-                {messagesElements}
+                <div>
+                    {messagesElements}
+                </div>
+                <div>
+                    <textarea 
+                        value={newMessageBody} 
+                        onChange={onNewMessageChange} 
+                        placeholder='Enter your message'> 
+                    </textarea>
+                </div>
+                <div>
+                    <button onClick={onSendMessageClick}>Отправить</button>
+                </div>
+                
                 {/*
                 <Message message={messagesData[0].message}/>
                 <Message message={messagesData[1].message}/>
@@ -88,13 +105,7 @@ const Dialogs = (props) => {
                 <div className={styles.message}>Hi</div>
                 <div className={styles.message}>How are you?</div>
                 <div className={styles.message}>Hello</div>*/}
-
-
-                <div>
-                    <textarea ref={newMessageElement}></textarea>
-                </div>
-                <button onClick={messageData}>Отправить</button>
-                
+        
             </div>   
         </div>
     )

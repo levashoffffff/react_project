@@ -1,5 +1,7 @@
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
+const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY';
+const SEND_MESSAGE = 'SEND-MESSAGE';
 
 let store = {
   //Хранилище данных, мы сделали его приватным, к нему нельзя обращаться напрямую.
@@ -23,7 +25,8 @@ let store = {
         {id: 1, message: 'Hi'},
         {id: 2, message: 'How are you?'},
         {id: 3, message: 'Hello'},
-      ]
+      ],
+      newMessageBody: ''
     },
     navbar: {
       friends: [
@@ -84,7 +87,17 @@ let store = {
     else if(action.type === 'UPDATE-NEW-POST-TEXT') {
       this._state.profilePage.newPostText = action.newText;
       //Запускается функция, которая будет повторно отрисовывать render с учетом изменившихся данных в state.js
-      this._callSubscriber()
+      this._callSubscriber();
+    }
+    else if(action.type === "UPDATE-NEW-MESSAGE-BODY") {
+      this._state.dialogsPage.newMessageBody = action.body;
+      this._callSubscriber();
+    }
+    else if(action.type === "SEND-MESSAGE") {
+      let body = this._state.dialogsPage.newMessageBody;
+      this._state.dialogsPage.newMessageBody = "";
+      this._state.dialogsPage.messagesData.push({id: 4, message: body});
+      this._callSubscriber();
     }
   }
 }
@@ -115,6 +128,19 @@ export const updateNewPostTextActionCreator = (text) => {
         type: UPDATE_NEW_POST_TEXT,
         newText: text
     }
-  }  
+  }
+  
+  export const sendMessageActionCreator = () => {
+    return {
+        type: SEND_MESSAGE,
+    }
+  }
+
+  export const newMessageBodyActionCreator = (body) => {
+    return {
+        type: UPDATE_NEW_MESSAGE_BODY,
+        body: body
+    }
+  }
 
 export default store;

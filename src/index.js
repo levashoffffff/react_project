@@ -62,9 +62,9 @@ const renderEntireTree = () => {
 
 //Вызвали функцию из render.js
 /* renderEntireTree(state); */
+const root = ReactDOM.createRoot(document.getElementById('root'));
 
 let renderEntireTree = () => {
-  const root = ReactDOM.createRoot(document.getElementById('root'));
   root.render(
     <React.StrictMode>
       {/* <App appState={store.getState()} 
