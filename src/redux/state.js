@@ -1,7 +1,11 @@
-const ADD_POST = 'ADD-POST';
+import profileReducer from "./profile-reducer";
+import dialogsReducer from "./dialogs-reducer";
+import sidebarReducer from "./sidebar-reducer";
+
+/* const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY';
-const SEND_MESSAGE = 'SEND-MESSAGE';
+const SEND_MESSAGE = 'SEND-MESSAGE'; */
 
 let store = {
   //Хранилище данных, мы сделали его приватным, к нему нельзя обращаться напрямую.
@@ -34,7 +38,8 @@ let store = {
         {id: 2, name: "Sasha"},
         {id: 3, name: "Sveta"},
       ]
-    }
+    },
+    sidebar: {}
   },
 
   //После отработки функции subscribe этой функции присвоится значение observer
@@ -72,7 +77,13 @@ let store = {
   }, */
 
   dispatch(action) { //{type: 'ADD-POST'}
-    //Участок кода который будет отрабатывать при клике на кнопку
+
+    //В данную переменную попадает обновленный объект после отработки reducer
+    this._state.profilePage = profileReducer(this._state.profilePage, action);
+    this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action);
+    this._state.sidebar = sidebarReducer(this._state.sidebar, action);
+    this._callSubscriber();
+    /* //Участок кода который будет отрабатывать при клике на кнопку
     if(action.type === 'ADD-POST') {
       let newPost = {
         id: 3,
@@ -98,7 +109,7 @@ let store = {
       this._state.dialogsPage.newMessageBody = "";
       this._state.dialogsPage.messagesData.push({id: 4, message: body});
       this._callSubscriber();
-    }
+    } */
   }
 }
 
@@ -116,7 +127,8 @@ export const updateNewPostTextActionCreator = (text) => {
   }
 } */
 
-  export const addPostActionCreator = (text) => {
+
+/*   export const addPostActionCreator = (text) => {
     return {
         type: ADD_POST,
         postMessage: text
@@ -128,9 +140,9 @@ export const updateNewPostTextActionCreator = (text) => {
         type: UPDATE_NEW_POST_TEXT,
         newText: text
     }
-  }
+  } */
   
-  export const sendMessageActionCreator = () => {
+/*   export const sendMessageActionCreator = () => {
     return {
         type: SEND_MESSAGE,
     }
@@ -141,6 +153,6 @@ export const updateNewPostTextActionCreator = (text) => {
         type: UPDATE_NEW_MESSAGE_BODY,
         body: body
     }
-  }
+  } */
 
 export default store;

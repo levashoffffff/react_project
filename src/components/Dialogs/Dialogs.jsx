@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import Message from './Message/Message';
 import DialogItem from './DialogItem/DialogItem';
 import React from 'react';
-import {newMessageBodyActionCreator, sendMessageActionCreator} from './../../redux/state.js'
+import {newMessageBodyActionCreator, sendMessageActionCreator} from './../../redux/dialogs-reducer.js'
 
 
 {/*const DialogItem = (props) => {
