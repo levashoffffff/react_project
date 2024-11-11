@@ -1,7 +1,17 @@
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 
-const profileReducer = (state, action) => {
+//Одноразовый объект
+let initialState = {
+    postData: [
+      {id: 1, message: 'Hi, how are you', count: 15},
+      {id: 2, message: 'It s my first post', count: 20}
+    ],
+    newPostText: 'Artur Levashov'
+  }
+
+//В том случае если в state ничего не прийдет, то присваивается initialState
+const profileReducer = (state = initialState, action) => {
 
     //Участок кода который будет отрабатывать при клике на кнопку
     if (action.type === 'ADD-POST') {

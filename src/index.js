@@ -6,8 +6,8 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import store, { subscribe } from './redux/state.js';
-import {addPost, updateNewPostText} from './redux/state.js';
+import store, { subscribe } from './redux/redux-store.js';
+//import {addPost, updateNewPostText} from './redux/state.js';
 
 
 //////////////Удаляем импорты т.к. они есть в render.js
@@ -79,7 +79,12 @@ let renderEntireTree = () => {
 
 renderEntireTree();
 
-store.subscribe(renderEntireTree);
+/* store.subscribe(renderEntireTree); */
+
+store.subscribe(() => {
+  let state = store.getState();
+  renderEntireTree(state);
+})
 
 
 // If you want to start measuring performance in your app, pass a function
