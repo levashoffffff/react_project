@@ -71,7 +71,7 @@ let renderEntireTree = () => {
           addPost={store.addPost.bind(store)} 
           updateNewPostText={store.updateNewPostText.bind(store)} /> */}
       {/*<App postData={postData} dialogsData={dialogsData} messagesData={messagesData} />*/}
-      <App appState={store.getState()} 
+      <App store={store} appState={store.getState()} 
           dispatch={store.dispatch.bind(store)} />
     </React.StrictMode>
   );

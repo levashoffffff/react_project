@@ -23,15 +23,17 @@ import {newMessageBodyActionCreator, sendMessageActionCreator} from './../../red
 
 const Dialogs = (props) => {
      {/*Через props получаем строку newMessagesBody */}
-    let newMessageBody = props.state.newMessagesBody;
+    let newMessageBody = props.dialogsPage.newMessagesBody;
 
     let onSendMessageClick = () => {
-        props.dispatch(sendMessageActionCreator());
+        /* props.dispatch(sendMessageActionCreator()); */
+        props.sendMessage();
     }
 
     let onNewMessageChange = (e) => {
         let body = e.target.value;
-        props.dispatch(newMessageBodyActionCreator(body));
+        props.updateNewMessageBody(body);
+        /* props.dispatch(newMessageBodyActionCreator(body)); */
     }
 
 
@@ -51,14 +53,14 @@ const Dialogs = (props) => {
     ];*/}
 
     {/*Преобразуем массив объектов в массив jsx элементов dialog */}
-    let dialogsElements = props.state.dialogsData.map( (dialog) => {
+    let dialogsElements = props.dialogsPage.dialogsData.map( (dialog) => {
         return (
             <DialogItem name={dialog.name} id={dialog.id} />
         )
     });
 
     {/*Преобразуем массив объектов в массив jsx элементов dialog */}
-    let messagesElements = props.state.messagesData.map( (message) => {
+    let messagesElements = props.dialogsPage.messagesData.map( (message) => {
         return (
             <Message message={message.message}/>
         )

@@ -20,7 +20,7 @@ let updateNewPostTextActionCreator = (text) => {
 const MyPosts = (props) => {
     
     {/*Преобразуем массив объектов в массив jsx элементов*/}
-    let postsElements = props.postData.map( (post) => {
+    let postsElements = props.posts.map( (post) => {
         return(
             <Post message={post.message} count={post.count} />
         )
@@ -28,19 +28,20 @@ const MyPosts = (props) => {
 
     let newPostElement = React.createRef();
 
-    let addPost = () => {
+    let onAddPost = () => {
         let text = newPostElement.current.value;
-        /* props.addPost(text);
-        props.updateNewPostText(''); */
-        /* props.dispatch({type: 'ADD-POST', postMessage: text}); */
-        props.dispatch(addPostActionCreator(text));
+/*         props.addPost(text);
+        props.updateNewPostText('');
+        props.dispatch({type: 'ADD-POST', postMessage: text}); */
+        props.addPost(text);
     }
 
     let onPostChange = () => {
         let text = newPostElement.current.value;
         /* props.updateNewPostText(text); */
         /* props.dispatch({type: 'UPDATE-NEW-POST-TEXT', newText: text}); */
-        props.dispatch(updateNewPostTextActionCreator(text));
+        //Прокинули функцию из MyPostsContainer.jsx
+        props.updateNewPostText(text);
     }
 
     return (
@@ -52,7 +53,7 @@ const MyPosts = (props) => {
                         <textarea onChange={onPostChange} ref={newPostElement} value={props.newPostText} />
                     </div>
                     <div>
-                        <button onClick={ addPost }>Add post</button>
+                        <button onClick={ onAddPost }>Add post</button>
                     </div>
                     <div>
                         <button>Remove</button>
