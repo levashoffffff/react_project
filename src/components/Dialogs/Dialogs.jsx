@@ -23,7 +23,7 @@ import {newMessageBodyActionCreator, sendMessageActionCreator} from './../../red
 
 const Dialogs = (props) => {
      {/*Через props получаем строку newMessagesBody */}
-    let newMessageBody = props.dialogsPage.newMessagesBody;
+    let newMessageBody = props.dialogsPage.newMessageBody;
 
     let onSendMessageClick = () => {
         /* props.dispatch(sendMessageActionCreator()); */
