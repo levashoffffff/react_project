@@ -7,6 +7,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import store, { subscribe } from './redux/redux-store.js';
+import StoreContext from './StoreContext.js';
 //import {addPost, updateNewPostText} from './redux/state.js';
 
 
@@ -71,8 +72,10 @@ let renderEntireTree = () => {
           addPost={store.addPost.bind(store)} 
           updateNewPostText={store.updateNewPostText.bind(store)} /> */}
       {/*<App postData={postData} dialogsData={dialogsData} messagesData={messagesData} />*/}
-      <App store={store} appState={store.getState()} 
+      <StoreContext.Provider value={store}>
+        <App store={store} appState={store.getState()} 
           dispatch={store.dispatch.bind(store)} />
+      </StoreContext.Provider>
     </React.StrictMode>
   );
 }
