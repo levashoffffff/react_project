@@ -15,6 +15,9 @@ let reducers = combineReducers({
 //Создаем store
 let store = createStore(reducers);
 
+//Сделали переменную глобальной, чтобы обращатьсяк ней в консоле
+window.store = store;
+
 export default store;
 
 /* import {combineReducers, legacy_createStore} from "redux"

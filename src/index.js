@@ -66,7 +66,7 @@ const renderEntireTree = () => {
 /* renderEntireTree(state); */
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-let renderEntireTree = () => {
+/* let renderEntireTree = () => { */
   root.render(
     <React.StrictMode>
       {/* <App appState={store.getState()} 
@@ -79,16 +79,16 @@ let renderEntireTree = () => {
       </Provider>
     </React.StrictMode>
   );
-}
+/* } */
 
-renderEntireTree();
+/* renderEntireTree(); */
 
 /* store.subscribe(renderEntireTree); */
 
-store.subscribe(() => {
+/* store.subscribe(() => {
   let state = store.getState();
   renderEntireTree(state);
-})
+}) */
 
 
 // If you want to start measuring performance in your app, pass a function
