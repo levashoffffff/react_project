@@ -55,14 +55,14 @@ const Dialogs = (props) => {
     {/*Преобразуем массив объектов в массив jsx элементов dialog */}
     let dialogsElements = props.dialogsPage.dialogsData.map( (dialog) => {
         return (
-            <DialogItem name={dialog.name} id={dialog.id} />
+            <DialogItem name={dialog.name} id={dialog.id} key={dialog.id} />
         )
     });
 
     {/*Преобразуем массив объектов в массив jsx элементов dialog */}
     let messagesElements = props.dialogsPage.messagesData.map( (message) => {
         return (
-            <Message message={message.message}/>
+            <Message message={message.message} key={message.id} />
         )
     })
 

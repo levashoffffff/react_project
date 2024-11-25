@@ -18,16 +18,31 @@ let initialState = {
   }
 
 const dialogsReducer = (state = initialState, action) => {
+    //Сделали поверхностную копию state
+    let stateCopy;
+    /* stateCopy.messagesData = [...state.messagesData]; */
+    //Синтаксис #2
+    /* let stateCopy = {
+        ...state,
+        messagesData: [...state.messagesData]
+    }; */
 
     switch (action.type) {
         case "UPDATE-NEW-MESSAGE-BODY":
-            state.newMessageBody = action.body;
-            return state;
+            //В данном случае не делаем глубокую копию, т.к. меняется примитив newMessageBody
+            stateCopy = {...state};
+            stateCopy.newMessageBody = action.body;
+            return stateCopy;
         case "SEND-MESSAGE":
             let body = state.newMessageBody;
-            state.newMessageBody = "";
-            state.messagesData.push({ id: 4, message: body });
-            return state;
+            //В данном случае делаем глубокую копию, т.к. меняется массив messagesData
+            stateCopy = {
+                ...state,
+                messagesData: [...state.messagesData]
+            };
+            stateCopy.newMessageBody = "";
+            stateCopy.messagesData.push({ id: 4, message: body });
+            return stateCopy;
         default:
             return state;
     }

@@ -12,7 +12,7 @@ let initialState = {
 
 //В том случае если в state ничего не прийдет, то присваивается initialState
 const profileReducer = (state = initialState, action) => {
-    let stateCopy = {...state};
+    let stateCopy;
     /*     //Участок кода который будет отрабатывать при клике на кнопку
         if (action.type === 'ADD-POST') {
             let newPost = {
@@ -30,6 +30,7 @@ const profileReducer = (state = initialState, action) => {
 
     //Участок кода который будет отрабатывать при клике на кнопку
     if (action.type === 'ADD-POST') {
+        stateCopy = {...state};
         let newPost = {
             id: 3,
             message: action.postMessage,
@@ -43,6 +44,7 @@ const profileReducer = (state = initialState, action) => {
     }
     //Участок кода который будет отрабатывать при изменении textarea
     else if (action.type === 'UPDATE-NEW-POST-TEXT') {
+        stateCopy = {...state};
         //Не делаем глубокую копию, т.к. достаточно и поверхностной копии let stateCopy = {...state};
         stateCopy.newPostText = action.newText;
         return stateCopy;
