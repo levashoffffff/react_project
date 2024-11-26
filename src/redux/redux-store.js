@@ -3,13 +3,15 @@ import profileReducer from "./profile-reducer";
 import dialogsReducer from "./dialogs-reducer";
 import sidebarReducer from "./sidebar-reducer";
 import navbarReducer from "./navbar-reducer";
+import usersReducer from "./users-reducers";
 
 //Подключаем наши reducers
 let reducers = combineReducers({
     profilePage: profileReducer,
     dialogsPage: dialogsReducer,
     sidebar: sidebarReducer,
-    navbar: navbarReducer
+    navbar: navbarReducer,
+    userPage: usersReducer
 });
 
 //Создаем store
