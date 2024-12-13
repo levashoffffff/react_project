@@ -1,74 +1,58 @@
 import React from 'react';
 import styles from './MyPosts.module.css'
 import Post from './Post/Post.jsx';
-import {addPostActionCreator, updateNewPostTextActionCreator} from './../../../redux/profile-reducer.js';
 
-/* let addPostActionCreator = (text) => {
-    return {
-        type: 'ADD-POST',
-        postMessage: text
+class MyPosts extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.newPostElement = React.createRef();
     }
-}
 
-let updateNewPostTextActionCreator = (text) => {
-    return {
-        type: 'UPDATE-NEW-POST-TEXT',
-        newText: text
-    }
-} */
-
-const MyPosts = (props) => {
-    
-    {/*Преобразуем массив объектов в массив jsx элементов*/}
-    let postsElements = props.posts.map( (post) => {
-        return(
-            <Post message={post.message} count={post.count} />
+    /*Преобразуем массив объектов в массив jsx элементов*/
+    postsElements = () => {
+        return (
+            this.props.posts.map((post) => {
+                return (
+                    <Post message={post.message} count={post.count} />
+                )
+            })
         )
-    });
-
-    let newPostElement = React.createRef();
-
-    let onAddPost = () => {
-        let text = newPostElement.current.value;
-/*         props.addPost(text);
-        props.updateNewPostText('');
-        props.dispatch({type: 'ADD-POST', postMessage: text}); */
-        props.addPost(text);
     }
 
-    let onPostChange = () => {
-        let text = newPostElement.current.value;
-        /* props.updateNewPostText(text); */
-        /* props.dispatch({type: 'UPDATE-NEW-POST-TEXT', newText: text}); */
-        //Прокинули функцию из MyPostsContainer.jsx
-        props.updateNewPostText(text);
+    onAddPost = () => {
+        this.text = this.newPostElement.current.value;
+        this.props.addPost(this.text);
     }
 
-    return (
-        
+    onPostChange = () => {
+        this.text = this.newPostElement.current.value;
+        this.props.updateNewPostText(this.text);
+    }
+
+    render() {
+        return (
             <div className={styles["posts-block"]}>
                 <h3>My posts</h3>
                 <div>
                     <div>
-                        <textarea onChange={onPostChange} ref={newPostElement} value={props.newPostText} />
+                        <textarea onChange={this.onPostChange} ref={this.newPostElement} value={this.props.newPostText} />
                     </div>
                     <div>
-                        <button onClick={ onAddPost }>Add post</button>
+                        <button onClick={this.onAddPost}>Add post</button>
                     </div>
                     <div>
                         <button>Remove</button>
-                    </div>  
+                    </div>
                 </div>
                 <div className={styles.posts}>
-                    
-                    {postsElements}
 
-                    {/*<Post message={postData[0].message} count={postData[0].count} />
-                    <Post message={postData[1].message} count={postData[1].count} />*/}
+                    {this.postsElements()}
+
                 </div>
             </div>
-        
-    )
+        )
+    }
 }
 
 export default MyPosts;
