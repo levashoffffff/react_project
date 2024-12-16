@@ -1,6 +1,8 @@
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET_USERS';
+const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
+const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT';
 
 let initialState = {
     /* usersData: [
@@ -8,7 +10,13 @@ let initialState = {
         { id: 2, followed: true, fullName: 'Sasha', status: 'I am a boss too', location: { city: 'Moscow', country: 'Russia' }, photoUrl: 'https://cdn-icons-png.flaticon.com/512/219/219983.png' },
         { id: 3, followed: false, fullName: 'Andrew', status: 'I am a boss again', location: { city: 'Ufa', country: 'Russia' }, photoUrl: 'https://cdn-icons-png.flaticon.com/512/219/219983.png' },
     ] */
-    usersData: []
+    usersData: [],
+    //Число постов на странице
+    pageSize: 5,
+    //Общее количество элементов
+    totalUsersCount: 0,
+    //Текущая страница
+    currentPage: 1
 }
 
 const usersReducer = (state = initialState, action) => {
@@ -48,9 +56,14 @@ const usersReducer = (state = initialState, action) => {
         }
         case SET_USERS: {
             /* return {...state, usersData: [...state.usersData, ...action.users]} */
-            return {...state, usersData: [...action.users]}
+            return {...state, usersData: action.users}
         }
-
+        case SET_CURRENT_PAGE: {
+            return {...state, currentPage: action.currentPage}
+        }
+        case SET_TOTAL_USERS_COUNT: {
+            return {...state, totalUsersCount: action.count}
+        }
         default:
             return state;
     }
@@ -77,4 +90,17 @@ export const setUsersAC = (users) => {
     }
 }
 
+export const setCurrentPageAC = (currentPage) => {
+    return {
+        type: SET_CURRENT_PAGE,
+        currentPage
+    }
+}
+
+export const setUsersTotalCountAC = (totalUsersCount) => {
+    return {
+        type: SET_TOTAL_USERS_COUNT,
+        count: totalUsersCount
+    }
+}
 export default usersReducer
