@@ -1,5 +1,5 @@
 import React from 'react';
-import { followAC, setUsersAC, unfollowAC, setCurrentPageAC, setUsersTotalCountAC, toggleIsFetchingAC } from '../../redux/users-reducers';
+import { follow, setUsers, unfollow, setCurrentPage, setTotalUsersCount, toggleIsFetching } from '../../redux/users-reducers';
 import { connect } from 'react-redux';
 import Users from './Users';
 import axios from 'axios';
@@ -64,7 +64,21 @@ let mapStateToProps = (state) => {
     }
 }
 
-let mapDispatchToProps = (dispatch) => {
+//Функциональная компонента отвечающая за свзять со store и прокидыванием данных в презентационную компоненту
+const UsersContainer = connect(mapStateToProps, {
+    follow,
+    unfollow,
+    setUsers,
+    setCurrentPage,
+    setTotalUsersCount,
+    toggleIsFetching
+})(UsersAPIComponent);
+
+export default UsersContainer;
+
+//ПЕРВЫЙ ВАРИАНТ ЗАПИСИ 
+//import { followAC, setUsersAC, unfollowAC, setCurrentPageAC, setTotalUsersCountAC, toggleIsFetchingAC } from '../../redux/users-reducers';
+/* let mapDispatchToProps = (dispatch) => {
     return {
         follow: (userId) => {
             dispatch(followAC(userId));
@@ -89,4 +103,19 @@ let mapDispatchToProps = (dispatch) => {
 
 //Функциональная компонента отвечающая за свзять со store и прокидыванием данных в презентационную компоненту
 const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(UsersAPIComponent);
-export default UsersContainer;
+export default UsersContainer; */
+
+//ВТОРОЙ ВАРИАНТ ЗАПИСИ 
+//import { follow, setUsers, unfollow, setCurrentPage, setTotalUsersCount, toggleIsFetching } from '../../redux/users-reducers';
+/* //Функциональная компонента отвечающая за свзять со store и прокидыванием данных в презентационную компоненту
+const UsersContainer = connect(mapStateToProps, {
+    follow: followAC,
+    unfollow: unfollowAC,
+    setUsers: setUsersAC,
+    setCurrentPage: setCurrentPageAC,
+    setTotalUsersCount: setUsersTotalCountAC,
+    toggleIsFetching: toggleIsFetchingAC
+})(UsersAPIComponent);
+
+export default UsersContainer; */
+
