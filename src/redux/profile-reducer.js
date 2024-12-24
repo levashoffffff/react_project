@@ -1,5 +1,6 @@
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
+const SET_USER_PROFILE = 'SET_USER_PROFILE';
 
 //Одноразовый объект
 let initialState = {
@@ -7,7 +8,8 @@ let initialState = {
         { id: 1, message: 'Hi, how are you', count: 15 },
         { id: 2, message: 'It s my first post', count: 20 }
     ],
-    newPostText: 'Artur Levashov'
+    newPostText: 'Artur Levashov',
+    profile: null
 }
 
 //В том случае если в state ничего не прийдет, то присваивается initialState
@@ -49,6 +51,9 @@ const profileReducer = (state = initialState, action) => {
         stateCopy.newPostText = action.newText;
         return stateCopy;
     }
+    else if(action.type === 'SET_USER_PROFILE') {
+        return {...state, profile: action.profile}
+    }
 
     return state;
 }
@@ -64,6 +69,13 @@ export const updateNewPostTextActionCreator = (text) => {
     return {
         type: UPDATE_NEW_POST_TEXT,
         newText: text
+    }
+}
+
+export const setUserProfile = (profile) => {
+    return {
+        type: SET_USER_PROFILE,
+        profile
     }
 }
 

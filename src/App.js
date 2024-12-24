@@ -2,7 +2,7 @@
 import './App.css';
 import Header from './components/Header/Header.jsx';
 import Navbar from './components/Navbar/Navbar.jsx';
-import Profile from './components/Profile/Profile.jsx';
+import ProfileContainer from './components/Profile/ProfileContainer.jsx';
 import DialogsContainer from './components/Dialogs/DialogsContainer.jsx';
 import UsersContainer from './components/Users/UsersContainer.jsx'
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -27,7 +27,7 @@ const App = (props) => {
            state={props.appState.profilePage}
            addPost={props.addPost}
            updateNewPostText={props.updateNewPostText} />}/> */}
-            <Route path="/profile" element={<Profile
+            <Route path="/profile/*" element={<ProfileContainer
               store={props.store}
               /* state={props.appState.profilePage} */
               state={props.appState.profilePage}
