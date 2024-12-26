@@ -6,6 +6,7 @@ import ProfileContainer from './components/Profile/ProfileContainer.jsx';
 import DialogsContainer from './components/Dialogs/DialogsContainer.jsx';
 import UsersContainer from './components/Users/UsersContainer.jsx'
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import HeaderContainer from './components/Header/HeaderContainer.jsx';
 
 
 const App = (props) => {
@@ -13,7 +14,7 @@ const App = (props) => {
   return (
     <BrowserRouter>
       <div className='app-wrapper'>
-        <Header />
+        <HeaderContainer />
         <Navbar state={props.appState.navbar} />
         <div className="app-wrapper-content">
           <Routes>
@@ -27,7 +28,7 @@ const App = (props) => {
            state={props.appState.profilePage}
            addPost={props.addPost}
            updateNewPostText={props.updateNewPostText} />}/> */}
-            <Route path="/profile/*" element={<ProfileContainer
+            <Route path="/profile/:userId?" element={<ProfileContainer
               store={props.store}
               /* state={props.appState.profilePage} */
               state={props.appState.profilePage}

@@ -4,6 +4,7 @@ import dialogsReducer from "./dialogs-reducer";
 import sidebarReducer from "./sidebar-reducer";
 import navbarReducer from "./navbar-reducer";
 import usersReducer from "./users-reducers";
+import authReducer from "./auth-reducer";
 
 //Подключаем наши reducers
 let reducers = combineReducers({
@@ -11,7 +12,8 @@ let reducers = combineReducers({
     dialogsPage: dialogsReducer,
     sidebar: sidebarReducer,
     navbar: navbarReducer,
-    userPage: usersReducer
+    userPage: usersReducer,
+    auth: authReducer
 });
 
 //Создаем store
