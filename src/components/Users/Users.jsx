@@ -1,5 +1,6 @@
 import styles from './Users.module.css';
 import userPhoto from '../../assets/images/user.png';
+import axios from 'axios';
 import { NavLink } from 'react-router-dom';
 
 let Users = (props) => {
@@ -33,9 +34,48 @@ let Users = (props) => {
                         </NavLink>
                     </div>
                     <div>
+
+                        {/* По клику на кнопку 
                         {user.followed
                             ? <button onClick={() => { props.unfollow(user.id) }}>Unfollow</button>
-                            : <button onClick={() => { props.follow(user.id) }}>Follow</button>}
+                            : <button onClick={() => { props.follow(user.id) }}>Follow</button>} */}
+
+                        {user.followed
+                            ? <button onClick={() => {
+                                //Выполняем Delete запрос, он как и get принимает объект настроект вторым параметром
+                                axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${user.id}`,
+                                    {
+                                        withCredentials: true,
+                                        headers: {
+                                            "API-KEY": "63e33a53-2eb5-441f-b352-308d2e906db0"
+                                        }
+                                    }).then((response) => {
+                                        //Если сервер подтвердил, что подписка произошла
+                                        if (response.data.resultCode == 0) {
+                                            //Запускаем callback follow и диспатчим id пользователя
+                                            props.unfollow(user.id);
+                                        }
+                                    });
+
+                            }}>Unfollow</button>
+                            : <button onClick={() => {
+                                //Выполняем Post запрос, но объект настроек прописываются 3м параметром, а не 2м как в Get запросе!!!! Поэтому 2м параметром поставили заглушку null
+                                axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${user.id}`, null,
+                                    {
+                                        withCredentials: true,
+                                        headers: {
+                                            "API-KEY": "63e33a53-2eb5-441f-b352-308d2e906db0"
+                                        }
+                                    }).then((response) => {
+
+                                        //Если сервер подтвердил, что подписка произошла
+                                        if (response.data.resultCode == 0) {
+                                            //Запускаем callback follow и диспатчим id пользователя
+                                            props.follow(user.id);
+                                        }
+                                    });
+
+                            }}>Follow</button>}
                     </div>
                 </span>
                 <span>
