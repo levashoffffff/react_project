@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import Users from './Users';
 import axios from 'axios';
 import Preloader from '../common/Preloader/Preloader';
+//DAL импорт функций, которые делают запросы на сервер
+import {usersAPI} from '../../api/api.js';
 
 //Объединили две контейнерные компоненты в один файл
 
@@ -14,13 +16,14 @@ class UsersAPIComponent extends React.Component {
         //Параллельно с запросом делаем изменение в state для отображения preloader
         this.props.toggleIsFetching(true);
         //Делаем первичный запрос на сервер
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`, {withCredentials: true}).then((response) => {
+        /* axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`, {withCredentials: true}) */
+        usersAPI.getUsers(this.props.currentPage, this.props.pageSize).then((data) => {
             //После того, как ответ пришел убираем preloader
             this.props.toggleIsFetching(false);
             //Заполняем массив
-            this.props.setUsers(response.data.items);
+            this.props.setUsers(data.items);
             //То количество объектов, которое хотим получить от сервера
-            this.props.setTotalUsersCount(response.data.totalCount - 26950);
+            this.props.setTotalUsersCount(data.totalCount - 26950);
         });
     }
 
@@ -28,10 +31,11 @@ class UsersAPIComponent extends React.Component {
         this.props.setCurrentPage(pageNumber);
         //При изменении страницы тоже добавляем preloader
         this.props.toggleIsFetching(true);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`, {withCredentials: true}).then((response) => {
+        /* axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`, {withCredentials: true}) */
+        usersAPI.getUsers(pageNumber, this.props.pageSize).then((data) => {
             //После ответа удаляем preloader
             this.props.toggleIsFetching(false);
-            this.props.setUsers(response.data.items);
+            this.props.setUsers(data.items);
         });
     }
 
