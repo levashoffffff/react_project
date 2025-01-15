@@ -41,7 +41,9 @@ let Users = (props) => {
                             : <button onClick={() => { props.follow(user.id) }}>Follow</button>} */}
 
                         {user.followed
-                            ? <button onClick={() => {
+                            ? <button disabled={props.followingInProgress.some((id) => id === user.id)} onClick={() => {
+                                //Disable button, чтобы мы не могли на неё нажимать, когда ждем ответа от сервера
+                                props.toggleFollowingProgress(true, user.id);
                                 //Выполняем Delete запрос, он как и get принимает объект настроект вторым параметром
                                 axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${user.id}`,
                                     {
@@ -55,10 +57,14 @@ let Users = (props) => {
                                             //Запускаем callback follow и диспатчим id пользователя
                                             props.unfollow(user.id);
                                         }
+                                        //Когда заканчивается запрос, то включим кнопку enable button
+                                        props.toggleFollowingProgress(false, user.id);
                                     });
 
                             }}>Unfollow</button>
-                            : <button onClick={() => {
+                            : <button disabled={props.followingInProgress.some((id) => id === user.id)} onClick={() => {
+                                //Disable button, чтобы мы не могли на неё нажимать, когда ждем ответа от сервера
+                                props.toggleFollowingProgress(true, user.id);
                                 //Выполняем Post запрос, но объект настроек прописываются 3м параметром, а не 2м как в Get запросе!!!! Поэтому 2м параметром поставили заглушку null
                                 axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${user.id}`, null,
                                     {
@@ -73,6 +79,8 @@ let Users = (props) => {
                                             //Запускаем callback follow и диспатчим id пользователя
                                             props.follow(user.id);
                                         }
+                                        //Когда заканчивается запрос, то включим кнопку enable button
+                                        props.toggleFollowingProgress(false, user.id);
                                     });
 
                             }}>Follow</button>}
