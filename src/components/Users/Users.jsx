@@ -1,7 +1,8 @@
 import styles from './Users.module.css';
 import userPhoto from '../../assets/images/user.png';
-import axios from 'axios';
 import { NavLink } from 'react-router-dom';
+
+import { usersAPI } from '../../api/api.js'
 
 let Users = (props) => {
 
@@ -42,9 +43,13 @@ let Users = (props) => {
 
                         {user.followed
                             ? <button disabled={props.followingInProgress.some((id) => id === user.id)} onClick={() => {
-                                //Disable button, чтобы мы не могли на неё нажимать, когда ждем ответа от сервера
+
+                                props.unfollow(user.id);
+
+                                /* //Disable button, чтобы мы не могли на неё нажимать, когда ждем ответа от сервера
                                 props.toggleFollowingProgress(true, user.id);
                                 //Выполняем Delete запрос, он как и get принимает объект настроект вторым параметром
+                                usersAPI.unfollow(user.id)
                                 axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${user.id}`,
                                     {
                                         withCredentials: true,
@@ -59,13 +64,17 @@ let Users = (props) => {
                                         }
                                         //Когда заканчивается запрос, то включим кнопку enable button
                                         props.toggleFollowingProgress(false, user.id);
-                                    });
+                                    }); */
 
                             }}>Unfollow</button>
                             : <button disabled={props.followingInProgress.some((id) => id === user.id)} onClick={() => {
-                                //Disable button, чтобы мы не могли на неё нажимать, когда ждем ответа от сервера
+
+                                props.follow(user.id);
+                                
+                                /* //Disable button, чтобы мы не могли на неё нажимать, когда ждем ответа от сервера
                                 props.toggleFollowingProgress(true, user.id);
                                 //Выполняем Post запрос, но объект настроек прописываются 3м параметром, а не 2м как в Get запросе!!!! Поэтому 2м параметром поставили заглушку null
+                                usersAPI.follow(user.id)
                                 axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${user.id}`, null,
                                     {
                                         withCredentials: true,
@@ -81,7 +90,7 @@ let Users = (props) => {
                                         }
                                         //Когда заканчивается запрос, то включим кнопку enable button
                                         props.toggleFollowingProgress(false, user.id);
-                                    });
+                                    }); */
 
                             }}>Follow</button>}
                     </div>

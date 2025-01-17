@@ -12,7 +12,13 @@ export const usersAPI = {
     getUsers(currentPage = 1, pageSize = 10) {
         return instance.get(`users?page=${currentPage}&count=${pageSize}`)
             .then(response => { return response.data });
-    }
+    },
+    follow(userId) {
+        return instance.post(`follow/${userId}`)
+    },
+    unfollow(userId) {
+        return instance.delete(`follow/${userId}`)
+    },
 }
 
 /*МОЖНО СДЕЛАТЬ ТАК (ОТДЕЛЬНЫМИ ФУНКЦИЯМИ) */
@@ -26,7 +32,7 @@ export const usersAPI = {
 } */
 
 //Т.е. мы вернули объект дата, а не целиком ответ от сервера
-export const getUsers2 = (currentPage=1, pageSize=10) => {
+export const getUsers2 = (currentPage = 1, pageSize = 10) => {
     return instance.get(`follow?page=${currentPage}&count=${pageSize}`)
-    .then(response => {return response.data});
+        .then(response => { return response.data });
 }
