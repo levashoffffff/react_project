@@ -1,14 +1,12 @@
 import React from "react";
 import Header from "./Header";
-import axios from 'axios';
 import { connect } from 'react-redux';
-import { setAuthUserData } from "../../redux/auth-reducer";
+import { getAuthUserData } from "../../redux/auth-reducer";
 
 class HeaderContainer extends React.Component {
     componentDidMount() {
-        axios.get(`https://social-network.samuraijs.com/api/1.0/auth/me`, {
-            withCredentials: true
-        }).then((response) => {
+        this.props.getAuthUserData();
+        /* authAPI.me().then((response) => {
             //Если мы авторизованы, код пришел 0
             if(response.data.resultCode === 0) {
                 //Сделали деструктуризацию, в data сидят эти свойства id, login, email
@@ -16,7 +14,7 @@ class HeaderContainer extends React.Component {
                 //В этом случае диспатчим авторизационные данные. Очень внимательно с последовательностью. Такая же как в reducers!!!
                 this.props.setAuthUserData(id, email, login);
             }
-        });
+        }); */
     }
     render() {
         return <Header {...this.props} />
@@ -28,4 +26,4 @@ const mapStateToProps = (state) => ({
     login: state.auth.login,
 })
 
-export default connect(mapStateToProps, {setAuthUserData})(HeaderContainer);
+export default connect(mapStateToProps, {getAuthUserData})(HeaderContainer);

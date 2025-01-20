@@ -1,3 +1,5 @@
+import { usersAPI } from '../api/api.js';
+
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
@@ -32,27 +34,27 @@ const profileReducer = (state = initialState, action) => {
 
     //Участок кода который будет отрабатывать при клике на кнопку
     if (action.type === 'ADD-POST') {
-        stateCopy = {...state};
+        stateCopy = { ...state };
         let newPost = {
             id: 3,
             message: action.postMessage,
             count: 0
         };
         //Делаем глубокую копию, т.к. изменяюется вложенный массив postData
-        stateCopy.postData = [...state.postData]; 
+        stateCopy.postData = [...state.postData];
         stateCopy.postData.push(newPost);
         stateCopy.newPostText = '';
         return stateCopy;
     }
     //Участок кода который будет отрабатывать при изменении textarea
     else if (action.type === 'UPDATE-NEW-POST-TEXT') {
-        stateCopy = {...state};
+        stateCopy = { ...state };
         //Не делаем глубокую копию, т.к. достаточно и поверхностной копии let stateCopy = {...state};
         stateCopy.newPostText = action.newText;
         return stateCopy;
     }
-    else if(action.type === 'SET_USER_PROFILE') {
-        return {...state, profile: action.profile}
+    else if (action.type === 'SET_USER_PROFILE') {
+        return { ...state, profile: action.profile }
     }
 
     return state;
@@ -77,6 +79,13 @@ export const setUserProfile = (profile) => {
         type: SET_USER_PROFILE,
         profile
     }
+}
+
+export const getUserProfile = (userId) => (dispatch) => {
+    usersAPI.getProfile(userId).then((response) => {
+        //Заполняем массив
+        dispatch(setUserProfile(response.data));
+    });
 }
 
 export default profileReducer;

@@ -1,8 +1,7 @@
 import React from 'react';
 import Profile from './Profile.jsx';
-import axios from 'axios';
 import { connect } from 'react-redux';
-import { setUserProfile } from '../../redux/profile-reducer.js';
+import { getUserProfile } from '../../redux/profile-reducer.js';
 //Для функции withRouter
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
@@ -15,10 +14,8 @@ class ProfileContainer extends React.Component {
         if(!userId) {
             userId = 2;
         }
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + userId).then((response) => {
-            //Заполняем массив
-            this.props.setUserProfile(response.data);
-        });
+        //Вызов функции thunk
+        this.props.getUserProfile(userId);
     }
 
     render() {
@@ -54,4 +51,4 @@ function withRouter(Component) {
 //Вызов функции, в переменную попадает контейнерная компонента, но с элементами URL
 let withUrlDataContainerComponent = withRouter(ProfileContainer);
 
-export default connect(mapStateToProps, { setUserProfile })(withUrlDataContainerComponent);
+export default connect(mapStateToProps, { getUserProfile })(withUrlDataContainerComponent);
