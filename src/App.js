@@ -7,6 +7,7 @@ import DialogsContainer from './components/Dialogs/DialogsContainer.jsx';
 import UsersContainer from './components/Users/UsersContainer.jsx'
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import HeaderContainer from './components/Header/HeaderContainer.jsx';
+import LoginPage from './components/Login/Login.jsx';
 
 
 const App = (props) => {
@@ -35,6 +36,8 @@ const App = (props) => {
               dispatch={props.dispatch} />} />
 
             <Route path="/users" element={<UsersContainer />} />
+
+            <Route path="/login" element={<LoginPage />} />
           </Routes>
         </div>
       </div>

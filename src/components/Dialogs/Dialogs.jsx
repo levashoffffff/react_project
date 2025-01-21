@@ -4,7 +4,7 @@ import Message from './Message/Message';
 import DialogItem from './DialogItem/DialogItem';
 import React from 'react';
 import {newMessageBodyActionCreator, sendMessageActionCreator} from './../../redux/dialogs-reducer.js'
-
+import { Navigate } from 'react-router-dom';
 
 {/*const DialogItem = (props) => {
     let path = "/dialogs/" + props.id;
@@ -65,6 +65,11 @@ const Dialogs = (props) => {
             <Message message={message.message} key={message.id} />
         )
     })
+
+    //Редирект на страницу логин, когда не авторизованы
+    if(props.isAuth == false) {
+        return <Navigate to={"/login"} />
+    }
 
     return (
         <div className={styles.dialogs}>
