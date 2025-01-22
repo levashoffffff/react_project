@@ -7,6 +7,7 @@ import { newMessageBodyActionCreator, sendMessageActionCreator } from './../../r
 import Dialogs from './Dialogs.jsx';
 import {connect} from 'react-redux';
 import StoreContext from './../../StoreContext.js';
+import { withAuthRedirect } from '../../hoc/withAuthRedirect.js';
 
 
 /* const DialogsContainer = (props) => {
@@ -45,7 +46,7 @@ import StoreContext from './../../StoreContext.js';
 let mapStateToProps = (state) => {
     return {
         dialogsPage: state.dialogsPage,
-        isAuth: state.auth.isAuth
+        /* isAuth: state.auth.isAuth */
     }
 }
 
@@ -60,6 +61,17 @@ let mapDispatchToProps = (dispatch) => {
     }
 }
 
-const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs);
+//HOC функция принимающая на входе компоненты и возвращает контейнерную компоненту
+let AuthRedirectComponent = withAuthRedirect(Dialogs);
+/* let AuthRedirectComponent = (props) => {
+    //Редирект на страницу логин, когда не авторизованы
+    if (this.props.isAuth == false) {
+        return <Navigate to={"/login"} />
+    }
+    return <Dialogs {...props} />
+} */
+    
+
+const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(AuthRedirectComponent);
 
 export default DialogsContainer;

@@ -11,6 +11,7 @@ import {
 import { connect } from 'react-redux';
 import Users from './Users';
 import Preloader from '../common/Preloader/Preloader';
+import { withAuthRedirect } from '../../hoc/withAuthRedirect';
 
 
 //Объединили две контейнерные компоненты в один файл
@@ -79,6 +80,8 @@ let mapStateToProps = (state) => {
     }
 }
 
+let withRedirect = withAuthRedirect(UsersAPIComponent);
+
 //Функциональная компонента отвечающая за свзять со store и прокидыванием данных в презентационную компоненту
 const UsersContainer = connect(mapStateToProps, {
     follow,
@@ -90,7 +93,7 @@ const UsersContainer = connect(mapStateToProps, {
     toggleFollowingProgress,
     /* getUsers: getUsersThunkCreator ,одно и то же*/
     getUsers
-})(UsersAPIComponent);
+})(withRedirect);
 
 export default UsersContainer;
 

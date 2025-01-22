@@ -3,7 +3,8 @@ import Profile from './Profile.jsx';
 import { connect } from 'react-redux';
 import { getUserProfile } from '../../redux/profile-reducer.js';
 //Для функции withRouter
-import { Navigate, useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { withAuthRedirect } from '../../hoc/withAuthRedirect.js';
 
 class ProfileContainer extends React.Component {
 
@@ -11,7 +12,7 @@ class ProfileContainer extends React.Component {
         //В переменную попадает id пользователя из URL
         let userId = this.props.router.params.userId;
         //Если userId не задан, то отображаем userId по умолчанию = 2
-        if(!userId) {
+        if (!userId) {
             userId = 2;
         }
         //Вызов функции thunk
@@ -20,9 +21,9 @@ class ProfileContainer extends React.Component {
 
     render() {
         //Редирект на страницу логин, когда не авторизованы
-        if(this.props.isAuth == false) {
+        /* if(this.props.isAuth == false) {
             return <Navigate to={"/login"} />
-        }
+        } */
 
         return (
             <div>
@@ -32,9 +33,12 @@ class ProfileContainer extends React.Component {
     }
 }
 
+//HOC функция принимающая на входе компоненты и возвращает контейнерную компоненту
+let AuthRedirectComponent = withAuthRedirect(ProfileContainer);
+
 let mapStateToProps = (state) => ({
     profile: state.profilePage.profile,
-    isAuth: state.auth.isAuth
+    /* isAuth: state.auth.isAuth */
 });
 
 //Описание функции withRouter
@@ -55,6 +59,6 @@ function withRouter(Component) {
 }
 
 //Вызов функции, в переменную попадает контейнерная компонента, но с элементами URL
-let withUrlDataContainerComponent = withRouter(ProfileContainer);
+let withUrlDataContainerComponent = withRouter(AuthRedirectComponent);
 
 export default connect(mapStateToProps, { getUserProfile })(withUrlDataContainerComponent);
