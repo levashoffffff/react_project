@@ -8,6 +8,7 @@ import Dialogs from './Dialogs.jsx';
 import {connect} from 'react-redux';
 import StoreContext from './../../StoreContext.js';
 import { withAuthRedirect } from '../../hoc/withAuthRedirect.js';
+import { compose } from 'redux';
 
 
 /* const DialogsContainer = (props) => {
@@ -75,3 +76,8 @@ let AuthRedirectComponent = withAuthRedirect(Dialogs);
 const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(AuthRedirectComponent);
 
 export default DialogsContainer;
+
+/* export default compose(
+    connect(mapStateToProps, mapDispatchToProps),
+    withAuthRedirect
+)(Dialogs) */

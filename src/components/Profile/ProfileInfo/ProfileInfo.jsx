@@ -1,5 +1,7 @@
 import Preloader from '../../common/Preloader/Preloader';
-import styles from './ProfileInfo.module.css'
+import styles from './ProfileInfo.module.css';
+import ProfileStatus from './ProfileStatus';
+
 
 const ProfileInfo = (props) => {
     if(!props.profile) {
@@ -8,12 +10,12 @@ const ProfileInfo = (props) => {
     return (
         <div>
 
-            <div className={styles.content}>
+            {/* <div className={styles.content}>
                 <img src="https://www.trn-news.ru/Ru/Upload/Image/hong-kong-skyline-view.jpg" />
-            </div>
+            </div> */}
             <div className={styles["description-block"]}>
                 <img src={props.profile.photos.large} />
-                ava + desc
+                <ProfileStatus status={"Hello"} />
             </div>
                  
         </div>
