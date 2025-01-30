@@ -1,7 +1,7 @@
 import React from 'react';
 import Profile from './Profile.jsx';
 import { connect } from 'react-redux';
-import { getUserProfile } from '../../redux/profile-reducer.js';
+import { getStatus, getUserProfile, updateStatus } from '../../redux/profile-reducer.js';
 //Для функции withRouter
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { withAuthRedirect } from '../../hoc/withAuthRedirect.js';
@@ -17,6 +17,7 @@ class ProfileContainer extends React.Component {
         }
         //Вызов функции thunk
         this.props.getUserProfile(userId);
+        this.props.getStatus(userId);
     }
 
     render() {
@@ -27,7 +28,12 @@ class ProfileContainer extends React.Component {
 
         return (
             <div>
-                <Profile {...this.props} profile={this.props.profile} />
+                <Profile
+                    {...this.props}
+                    profile={this.props.profile}
+                    status={this.props.status}
+                    updateStatus={this.props.updateStatus}
+                />
             </div>
         )
     }
@@ -38,6 +44,7 @@ let AuthRedirectComponent = withAuthRedirect(ProfileContainer);
 
 let mapStateToProps = (state) => ({
     profile: state.profilePage.profile,
+    status: state.profilePage.status
     /* isAuth: state.auth.isAuth */
 });
 
@@ -61,4 +68,4 @@ function withRouter(Component) {
 //Вызов функции, в переменную попадает контейнерная компонента, но с элементами URL
 let withUrlDataContainerComponent = withRouter(AuthRedirectComponent);
 
-export default connect(mapStateToProps, { getUserProfile })(withUrlDataContainerComponent);
+export default connect(mapStateToProps, { getUserProfile, getStatus, updateStatus })(withUrlDataContainerComponent);

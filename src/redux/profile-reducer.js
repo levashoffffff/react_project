@@ -1,8 +1,9 @@
-import { usersAPI } from '../api/api.js';
+import { profileAPI, usersAPI } from '../api/api.js';
 
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
+const SET_STATUS = "SET_STATUS";
 
 //Одноразовый объект
 let initialState = {
@@ -11,7 +12,8 @@ let initialState = {
         { id: 2, message: 'It s my first post', count: 20 }
     ],
     newPostText: 'Artur Levashov',
-    profile: null
+    profile: null,
+    status: ""
 }
 
 //В том случае если в state ничего не прийдет, то присваивается initialState
@@ -53,6 +55,9 @@ const profileReducer = (state = initialState, action) => {
         stateCopy.newPostText = action.newText;
         return stateCopy;
     }
+    else if (action.type === 'SET_STATUS') {
+        return { ...state, status: action.status }
+    }
     else if (action.type === 'SET_USER_PROFILE') {
         return { ...state, profile: action.profile }
     }
@@ -81,10 +86,34 @@ export const setUserProfile = (profile) => {
     }
 }
 
+export const setStatus = (status) => {
+    return {
+        type: SET_STATUS,
+        status: status
+    }
+}
+
+//THUNK
 export const getUserProfile = (userId) => (dispatch) => {
     usersAPI.getProfile(userId).then((response) => {
         //Заполняем массив
         dispatch(setUserProfile(response.data));
+    });
+}
+
+export const getStatus = (userId) => (dispatch) => {
+    profileAPI.getStatus(userId).then((response) => {
+        //Заполняем массив
+        dispatch(setStatus(response.data));
+    });
+}
+
+export const updateStatus = (status) => (dispatch) => {
+    profileAPI.updateStatus(status).then((response) => {
+        if (response.data.resultCode === 0) {
+            //Заполняем массив
+            dispatch(setStatus(status));
+        }
     });
 }
 
