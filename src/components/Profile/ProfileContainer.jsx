@@ -17,6 +17,7 @@ class ProfileContainer extends React.Component {
         }
         //Вызов функции thunk
         this.props.getUserProfile(userId);
+        //Делаем запрос на получение статуса
         this.props.getStatus(userId);
     }
 
@@ -44,6 +45,7 @@ let AuthRedirectComponent = withAuthRedirect(ProfileContainer);
 
 let mapStateToProps = (state) => ({
     profile: state.profilePage.profile,
+    //Получаем статус из state
     status: state.profilePage.status
     /* isAuth: state.auth.isAuth */
 });
