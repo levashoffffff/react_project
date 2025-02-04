@@ -5,7 +5,8 @@ import sidebarReducer from "./sidebar-reducer";
 import navbarReducer from "./navbar-reducer";
 import usersReducer from "./users-reducers";
 import authReducer from "./auth-reducer";
-import { thunk as thunkMiddleware } from "redux-thunk"
+import { thunk as thunkMiddleware } from "redux-thunk";
+import { reducer as formReducer } from 'redux-form';
 
 //Подключаем наши reducers
 let reducers = combineReducers({
@@ -14,7 +15,8 @@ let reducers = combineReducers({
     sidebar: sidebarReducer,
     navbar: navbarReducer,
     userPage: usersReducer,
-    auth: authReducer
+    auth: authReducer,
+    form: formReducer
 });
 
 //Создаем store
