@@ -1,7 +1,7 @@
 import { profileAPI, usersAPI } from '../api/api.js';
 
 const ADD_POST = 'ADD-POST';
-const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
+/* const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'; */
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const SET_STATUS = "SET_STATUS";
 
@@ -11,7 +11,7 @@ let initialState = {
         { id: 1, message: 'Hi, how are you', count: 15 },
         { id: 2, message: 'It s my first post', count: 20 }
     ],
-    newPostText: 'Artur Levashov',
+    /* newPostText: 'Artur Levashov', */
     profile: null,
     status: ""
 }
@@ -39,13 +39,13 @@ const profileReducer = (state = initialState, action) => {
         stateCopy = { ...state };
         let newPost = {
             id: 3,
-            message: action.postMessage,
+            message: action.newPostText,
             count: 0
         };
         //Делаем глубокую копию, т.к. изменяюется вложенный массив postData
         stateCopy.postData = [...state.postData];
         stateCopy.postData.push(newPost);
-        stateCopy.newPostText = '';
+        /* stateCopy.newPostText = ''; */
         return stateCopy;
     }
     //Участок кода который будет отрабатывать при изменении textarea
@@ -65,19 +65,19 @@ const profileReducer = (state = initialState, action) => {
     return state;
 }
 
-export const addPostActionCreator = (text) => {
+export const addPostActionCreator = (newPostText) => {
     return {
         type: ADD_POST,
-        postMessage: text
+        newPostText
     }
 }
 
-export const updateNewPostTextActionCreator = (text) => {
+/* export const updateNewPostTextActionCreator = (text) => {
     return {
         type: UPDATE_NEW_POST_TEXT,
         newText: text
     }
-}
+} */
 
 export const setUserProfile = (profile) => {
     return {

@@ -1,4 +1,4 @@
-const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY';
+/* const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY'; */
 const SEND_MESSAGE = 'SEND-MESSAGE';
 
 let initialState = {
@@ -14,7 +14,7 @@ let initialState = {
       {id: 2, message: 'How are you?'},
       {id: 3, message: 'Hello'},
     ],
-    newMessageBody: ''
+    /* newMessageBody: '' */
   }
 
 const dialogsReducer = (state = initialState, action) => {
@@ -28,19 +28,19 @@ const dialogsReducer = (state = initialState, action) => {
     }; */
 
     switch (action.type) {
-        case "UPDATE-NEW-MESSAGE-BODY":
+/*         case "UPDATE-NEW-MESSAGE-BODY":
             //В данном случае не делаем глубокую копию, т.к. меняется примитив newMessageBody
             stateCopy = {...state};
             stateCopy.newMessageBody = action.body;
-            return stateCopy;
+            return stateCopy; */
         case "SEND-MESSAGE":
-            let body = state.newMessageBody;
+            let body = action.newMessageBody;
             //В данном случае делаем глубокую копию, т.к. меняется массив messagesData
             stateCopy = {
                 ...state,
                 messagesData: [...state.messagesData]
             };
-            stateCopy.newMessageBody = "";
+            /* stateCopy.newMessageBody = ""; */
             stateCopy.messagesData.push({ id: 4, message: body });
             return stateCopy;
         default:
@@ -60,17 +60,18 @@ const dialogsReducer = (state = initialState, action) => {
     return state; */
 }
 
-export const sendMessageActionCreator = () => {
+export const sendMessageActionCreator = (newMessageBody) => {
     return {
         type: SEND_MESSAGE,
+        newMessageBody: newMessageBody
     }
 }
 
-export const newMessageBodyActionCreator = (body) => {
+/* export const newMessageBodyActionCreator = (body) => {
     return {
         type: UPDATE_NEW_MESSAGE_BODY,
         body: body
     }
-}
+} */
 
 export default dialogsReducer;

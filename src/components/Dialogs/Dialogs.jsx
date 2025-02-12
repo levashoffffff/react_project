@@ -3,8 +3,9 @@ import { NavLink } from 'react-router-dom';
 import Message from './Message/Message';
 import DialogItem from './DialogItem/DialogItem';
 import React from 'react';
-import {newMessageBodyActionCreator, sendMessageActionCreator} from './../../redux/dialogs-reducer.js'
+import { newMessageBodyActionCreator, sendMessageActionCreator } from './../../redux/dialogs-reducer.js'
 import { Navigate } from 'react-router-dom';
+import { Field, reduxForm } from 'redux-form';
 
 {/*const DialogItem = (props) => {
     let path = "/dialogs/" + props.id;
@@ -22,22 +23,27 @@ import { Navigate } from 'react-router-dom';
 }*/}
 
 const Dialogs = (props) => {
-     {/*Через props получаем строку newMessagesBody */}
-    let newMessageBody = props.dialogsPage.newMessageBody;
+    {/*Через props получаем строку newMessagesBody */ }
+    /* let newMessageBody = props.dialogsPage.newMessageBody; */
 
-    let onSendMessageClick = () => {
-        /* props.dispatch(sendMessageActionCreator()); */
-        props.sendMessage();
-    }
+    {/*let onSendMessageClick = () => {
+        /* props.dispatch(sendMessageActionCreator()); 
+        props.sendMessage();}*/}
 
-    let onNewMessageChange = (e) => {
+
+   {/*  let onNewMessageChange = (e) => {
         let body = e.target.value;
         props.updateNewMessageBody(body);
-        /* props.dispatch(newMessageBodyActionCreator(body)); */
+        /* props.dispatch(newMessageBodyActionCreator(body)); }*/ 
+    }
+
+    //Функция для redux-form
+    let addNewMessage = (values) => {
+        props.sendMessage(values.newMessageBody);
     }
 
 
-    {/*Данные*/}
+    {/*Данные*/ }
     {/*let dialogsData = [
         {id: 1, name: 'Andrey'},
         {id: 2, name: 'Artur'},
@@ -52,22 +58,22 @@ const Dialogs = (props) => {
         {id: 3, message: 'Hello'},
     ];*/}
 
-    {/*Преобразуем массив объектов в массив jsx элементов dialog */}
-    let dialogsElements = props.dialogsPage.dialogsData.map( (dialog) => {
+    {/*Преобразуем массив объектов в массив jsx элементов dialog */ }
+    let dialogsElements = props.dialogsPage.dialogsData.map((dialog) => {
         return (
             <DialogItem name={dialog.name} id={dialog.id} key={dialog.id} />
         )
     });
 
-    {/*Преобразуем массив объектов в массив jsx элементов dialog */}
-    let messagesElements = props.dialogsPage.messagesData.map( (message) => {
+    {/*Преобразуем массив объектов в массив jsx элементов dialog */ }
+    let messagesElements = props.dialogsPage.messagesData.map((message) => {
         return (
             <Message message={message.message} key={message.id} />
         )
     })
 
     //Редирект на страницу логин, когда не авторизованы
-    if(props.isAuth == false) {
+    if (props.isAuth == false) {
         return <Navigate to={"/login"} />
     }
 
@@ -84,12 +90,14 @@ const Dialogs = (props) => {
                 <DialogItem name="Katya" id="3" />
                 <DialogItem name="Victor" id="4" />
                 <DialogItem name="Valera" id="5" />*/}
-            </div> 
+            </div>
             <div className={styles.messages}>
                 <div>
                     {messagesElements}
                 </div>
-                <div>
+
+                <AddMessageFormRedux onSubmit={addNewMessage}/>
+                {/*                 <div>
                     <textarea 
                         value={newMessageBody} 
                         onChange={onNewMessageChange} 
@@ -98,8 +106,8 @@ const Dialogs = (props) => {
                 </div>
                 <div>
                     <button onClick={onSendMessageClick}>Отправить</button>
-                </div>
-                
+                </div> */}
+
                 {/*
                 <Message message={messagesData[0].message}/>
                 <Message message={messagesData[1].message}/>
@@ -112,10 +120,34 @@ const Dialogs = (props) => {
                 <div className={styles.message}>Hi</div>
                 <div className={styles.message}>How are you?</div>
                 <div className={styles.message}>Hello</div>*/}
-        
-            </div>   
+
+            </div>
         </div>
     )
 }
+
+const AddMessageForm = (props) => {
+    return (
+        <form onSubmit={props.handleSubmit}>
+            <div>
+                <Field component="textarea" name="newMessageBody" placeholder="Enter your message" />
+                {/* <textarea
+                    value={newMessageBody}
+                    onChange={onNewMessageChange}
+                    placeholder='Enter your message'>
+                </textarea> */}
+            </div>
+            <div>
+                {/* <button onClick={onSendMessageClick}>Отправить</button> */}
+                <button>Отправить</button>
+            </div>
+        </form>
+    )
+}
+
+const AddMessageFormRedux = reduxForm({
+    // a unique name for the form
+    form: 'dialogAddMessageForm'
+  })(AddMessageForm)
 
 export default Dialogs;
