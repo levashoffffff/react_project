@@ -1,0 +1,29 @@
+.friends-content {
+    margin-top: 15px;
+    color: #fff;
+}
+
+.friends {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.friends-item {
+    margin-top: 10px;
+    margin-right: 5px;
+}
+
+.circle {
+    width: 40px;
+    height: 40px;
+    background-color: yellow;
+    border-radius: 40px;
+    margin: 0 auto;
+}
+
+.friends-name {
+    font-size: 12px;
+    text-align: center;
+    margin-top: 5px;
+}
