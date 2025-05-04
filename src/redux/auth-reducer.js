@@ -47,8 +47,8 @@ export const setAuthUserData = (userId, email, login, isAuth) => {
     });
 } */
 
-export const getAuthUserData = () =>  async (dispatch) => {
-    let response   = await authAPI.me()
+export const getAuthUserData = () => async (dispatch) => {
+    let response = await authAPI.me()
         //Если мы авторизованы, код пришел 0
         if (response.data.resultCode === 0) {
             //Сделали деструктуризацию, в data сидят эти свойства id, login, email
