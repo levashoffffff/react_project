@@ -35,7 +35,7 @@ export const setAuthUserData = (userId, email, login, isAuth) => {
     }
 }
 
-export const getAuthUserData = () => (dispatch) => {
+/* export const getAuthUserData = () => (dispatch) => {
     return authAPI.me().then((response) => {
         //Если мы авторизованы, код пришел 0
         if (response.data.resultCode === 0) {
@@ -45,6 +45,17 @@ export const getAuthUserData = () => (dispatch) => {
             dispatch(setAuthUserData(id, email, login, true));
         }
     });
+} */
+
+export const getAuthUserData = () =>  async (dispatch) => {
+    let response   = await authAPI.me()
+        //Если мы авторизованы, код пришел 0
+        if (response.data.resultCode === 0) {
+            //Сделали деструктуризацию, в data сидят эти свойства id, login, email
+            let { id, login, email } = response.data.data;
+            //В этом случае диспатчим авторизационные данные. Очень внимательно с последовательностью. Такая же как в reducers!!!
+            dispatch(setAuthUserData(id, email, login, true));
+        }
 }
 
 export const login = (email, password, rememberMe) => (dispatch) => {
