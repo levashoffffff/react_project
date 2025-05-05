@@ -1,4 +1,4 @@
-import {applyMiddleware, combineReducers, legacy_createStore as createStore}  from "redux";
+import {applyMiddleware, compose, combineReducers, legacy_createStore as createStore}  from "redux";
 import profileReducer from "./profile-reducer";
 import dialogsReducer from "./dialogs-reducer";
 import sidebarReducer from "./sidebar-reducer";
@@ -18,11 +18,16 @@ let reducers = combineReducers({
     userPage: usersReducer,
     auth: authReducer,
     form: formReducer,
-    app: appReducer
+    app: appReducer,
 });
 
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(reducers, /* preloadedState, */ composeEnhancers(
+    applyMiddleware(thunkMiddleware)
+));
+
 //Создаем store
-let store = createStore(reducers, applyMiddleware(thunkMiddleware));
+/* let store = createStore(reducers, applyMiddleware(thunkMiddleware)); */
 
 //Сделали переменную глобальной, чтобы обращатьсяк ней в консоле
 window.store = store;
